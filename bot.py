@@ -3,6 +3,7 @@ import pandas as pd
 from flask import Flask
 from telegram import Update
 from telegram.ext import Application, MessageHandler, ContextTypes, filters
+import threading
 
 app = Flask(__name__)
 
@@ -42,8 +43,6 @@ def run_bot():
     application.run_polling()
 
 if __name__ == "__main__":
-    import threading
-
     threading.Thread(target=run_bot).start()
 
     port = int(os.environ.get("PORT", 10000))
