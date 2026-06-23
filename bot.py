@@ -2,7 +2,7 @@ import pandas as pd
 from telegram import Update
 from telegram.ext import Application, MessageHandler, ContextTypes, filters
 
-TOKEN = "8931236658:AAGRzJ5CsuAtr0bO0tkolOOlvV1ZJzfGSho"
+TOKEN = "8931236658:AAHPg0gAOIT8MjaZvBsV-CyUiStB11D4908"
 
 df = pd.read_excel("pvz.xlsx")
 df.columns = ["address", "pvz_name", "latitude", "longitude"]
