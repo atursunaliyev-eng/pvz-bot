@@ -4,14 +4,14 @@ from flask import Flask
 from telegram import Update
 from telegram.ext import Application, MessageHandler, ContextTypes, filters
 
-# ---------------- FLASK (Render port uchun) ----------------
+# ---------------- FLASK ----------------
 app = Flask(__name__)
 
 @app.route("/")
 def home():
     return "Bot ishlayapti"
 
-# ---------------- BOT TOKEN ----------------
+# ---------------- TOKEN ----------------
 TOKEN = os.environ.get("BOT_TOKEN")
 
 # ---------------- DATA ----------------
@@ -39,8 +39,8 @@ async def search_pvz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         longitude=float(row["longitude"])
     )
 
-# ---------------- BOT START ----------------
-def run_bot():
+# ---------------- BOT START (MAIN THREAD) ----------------
+def start_bot():
     application = Application.builder().token(TOKEN).build()
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, search_pvz))
 
@@ -49,11 +49,10 @@ def run_bot():
 
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
-    import threading
+    from threading import Thread
 
-    # BOT alohida thread
-    threading.Thread(target=run_bot, daemon=True).start()
-
-    # FLASK main thread (Render talab qiladi)
+    # ⚠️ MUHIM: Flask FIRST (main thread)
     port = int(os.environ.get("PORT", 10000))
+    Thread(target=start_bot, daemon=True).start()
+
     app.run(host="0.0.0.0", port=port)
