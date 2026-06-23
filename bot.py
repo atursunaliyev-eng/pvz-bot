@@ -1,18 +1,8 @@
 import os
-import threading
 import pandas as pd
-from flask import Flask
 from telegram import Update
 from telegram.ext import Application, MessageHandler, ContextTypes, filters
 
-# ---------------- FLASK (PORT uchun) ----------------
-app = Flask(__name__)
-
-@app.route("/")
-def home():
-    return "Bot ishlayapti"
-
-# ---------------- TELEGRAM BOT ----------------
 TOKEN = os.environ.get("BOT_TOKEN")
 
 df = pd.read_excel("pvz.xlsx")
@@ -38,19 +28,10 @@ async def search_pvz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         longitude=float(row["longitude"])
     )
 
-def run_bot():
-    application = Application.builder().token(TOKEN).build()
+app = Application.builder().token(TOKEN).build()
 
-    application.add_handler(
-        MessageHandler(filters.TEXT & ~filters.COMMAND, search_pvz)
-    )
+app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, search_pvz))
 
-    print("Bot ishga tushdi...")
-    application.run_polling()
-
-# ---------------- RUN BOTH ----------------
 if __name__ == "__main__":
-    threading.Thread(target=run_bot).start()
-
-    PORT = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=PORT)
+    print("Bot ishga tushdi...")
+    app.run_polling()
