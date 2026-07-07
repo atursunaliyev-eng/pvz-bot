@@ -36,35 +36,34 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     search_text = normalize(user_text)
 
     # ==========================
-# 1. QR KOD QIDIRISH
-# ==========================
+    # QR KOD QIDIRISH
+    # ==========================
+    qr_folders = ["qr1", "qr2", "qr3"]
 
-qr_folders = ["qr1", "qr2", "qr3"]
+    for qr_folder in qr_folders:
 
-for qr_folder in qr_folders:
+        if not os.path.isdir(qr_folder):
+            continue
 
-    if not os.path.isdir(qr_folder):
-        continue
+        for file in os.listdir(qr_folder):
 
-    for file in os.listdir(qr_folder):
+            if file.lower().endswith(".png"):
 
-        if file.lower().endswith(".png"):
+                file_name = os.path.splitext(file)[0]
 
-            file_name = os.path.splitext(file)[0]
+                if normalize(file_name) == search_text:
 
-            if normalize(file_name) == search_text:
+                    with open(os.path.join(qr_folder, file), "rb") as photo:
 
-                with open(os.path.join(qr_folder, file), "rb") as photo:
+                        await update.message.reply_photo(
+                            photo=photo,
+                            caption=f"🚚 Mashina: {file_name}"
+                        )
 
-                    await update.message.reply_photo(
-                        photo=photo,
-                        caption=f"🚚 Mashina: {file_name}"
-                    )
-
-                return
+                    return
 
     # ==========================
-    # PVZ qidirish
+    # PVZ QIDIRISH
     # ==========================
     result = df[df["pvz_name"].astype(str).str.upper() == user_text.upper()]
 
@@ -85,7 +84,7 @@ for qr_folder in qr_folders:
         return
 
     # ==========================
-    # Topilmadi
+    # TOPILMADI
     # ==========================
     await update.message.reply_text("❌ Ma'lumot topilmadi.")
 
