@@ -175,11 +175,10 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # ==========================
 
     result = df[
-        df["pvz_name"]
-        .astype(str)
-        .str.upper()
-        == user_text.upper()
-    ]
+    df["pvz_name"]
+    .apply(normalize)
+    == search_text
+]
 
 
     if not result.empty:
