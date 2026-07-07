@@ -83,6 +83,13 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # ==========================
     await update.message.reply_text("❌ Ma'lumot topilmadi.")
 
+print("Current folder:", os.getcwd())
+print("Files:", os.listdir("."))
+print("QR exists:", os.path.isdir("qr"))
+
+if os.path.isdir("qr"):
+    print("QR files:", os.listdir("qr"))
+
 
 # ==========================
 # BOT
