@@ -1,9 +1,8 @@
-import os
 import pandas as pd
 from telegram import Update
 from telegram.ext import Application, MessageHandler, ContextTypes, filters
 
-TOKEN = os.environ.get("BOT_TOKEN")
+TOKEN = "8931236658:AAHPg0gAOIT8MjaZvBsV-CyUiStB11D4908"
 
 df = pd.read_excel("pvz.xlsx")
 df.columns = ["address", "pvz_name", "latitude", "longitude"]
@@ -28,15 +27,11 @@ async def search_pvz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         longitude=float(row["longitude"])
     )
 
-def main():
-    app = Application.builder().token(TOKEN).build()
+app = Application.builder().token(TOKEN).build()
 
-    app.add_handler(
-        MessageHandler(filters.TEXT & ~filters.COMMAND, search_pvz)
-    )
+app.add_handler(
+    MessageHandler(filters.TEXT & ~filters.COMMAND, search_pvz)
+)
 
-    print("Bot ishga tushdi...")
-    app.run_polling()
-
-if __name__ == "__main__":
-    main()
+print("Bot ishga tushdi...")
+app.run_polling()
