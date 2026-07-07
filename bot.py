@@ -36,19 +36,19 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     search_text = normalize(user_text)
 
     # ==========================
-    # QR papkalar
-    # ==========================
-    qr_folders = ["qr1", "qr2", "qr3"]
+# 1. QR KOD QIDIRISH
+# ==========================
 
-    for qr_folder in qr_folders:
+qr_folders = ["qr1", "qr2", "qr3"]
 
-        if not os.path.isdir(qr_folder):
-            continue
+for qr_folder in qr_folders:
 
-        for file in os.listdir(qr_folder):
+    if not os.path.isdir(qr_folder):
+        continue
 
-            if not file.lower().endswith(".png"):
-                continue
+    for file in os.listdir(qr_folder):
+
+        if file.lower().endswith(".png"):
 
             file_name = os.path.splitext(file)[0]
 
