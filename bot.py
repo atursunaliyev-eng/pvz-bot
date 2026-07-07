@@ -6,7 +6,7 @@ from telegram.ext import Application, MessageHandler, ContextTypes, filters
 # ==========================
 # BOT TOKEN
 # ==========================
-TOKEN = "BOTFATHER_DAN_OLGAN_YANGI_TOKENINGIZ"
+TOKEN = "8931236658:AAHPg0gAOIT8MjaZvBsV-CyUiStB11D4908"
 
 # ==========================
 # EXCEL
