@@ -100,7 +100,7 @@ async def send_all(context, text):
 
 async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    if update.effective_user.id != ADMIN_ID:570866674
+    if update.effective_user.id != ADMIN_ID = 570866674
         return
 
 
