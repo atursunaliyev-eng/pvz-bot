@@ -6,13 +6,14 @@ from telegram.ext import Application, MessageHandler, ContextTypes, filters
 # ==========================
 # BOT TOKEN
 # ==========================
-TOKEN = "8931236658:AAHPg0gAOIT8MjaZvBsV-CyUiStB11D4908"
+TOKEN = "BOTFATHER_DAN_OLGAN_YANGI_TOKENINGIZ"
 
 # ==========================
 # EXCEL
 # ==========================
 df = pd.read_excel("pvz.xlsx")
 df.columns = ["address", "pvz_name", "latitude", "longitude"]
+
 
 # ==========================
 # TEXTNI TOZALASH
@@ -25,6 +26,7 @@ def normalize(text):
         .replace("-", "")
     )
 
+
 # ==========================
 # QIDIRUV
 # ==========================
@@ -34,18 +36,19 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     search_text = normalize(user_text)
 
     # ==========================
-    # 1. QR KOD QIDIRISH
+    # QR papkalar
     # ==========================
     qr_folders = ["qr1", "qr2"]
 
-for qr_folder in qr_folders:
+    for qr_folder in qr_folders:
 
-    if not os.path.isdir(qr_folder):
-        continue
+        if not os.path.isdir(qr_folder):
+            continue
 
-    for file in os.listdir(qr_folder):
+        for file in os.listdir(qr_folder):
 
-        if file.lower().endswith(".png"):
+            if not file.lower().endswith(".png"):
+                continue
 
             file_name = os.path.splitext(file)[0]
 
@@ -60,23 +63,8 @@ for qr_folder in qr_folders:
 
                 return
 
-            if file.lower().endswith(".png"):
-
-                file_name = os.path.splitext(file)[0]
-
-                if normalize(file_name) == search_text:
-
-                    with open(os.path.join(qr_folder, file), "rb") as photo:
-
-                        await update.message.reply_photo(
-                            photo=photo,
-                            caption=f"🚚 Mashina: {file_name}"
-                        )
-
-                    return
-
     # ==========================
-    # 2. PVZ QIDIRISH
+    # PVZ qidirish
     # ==========================
     result = df[df["pvz_name"].astype(str).str.upper() == user_text.upper()]
 
@@ -97,22 +85,27 @@ for qr_folder in qr_folders:
         return
 
     # ==========================
-    # TOPILMADI
+    # Topilmadi
     # ==========================
     await update.message.reply_text("❌ Ma'lumot topilmadi.")
 
-print("Current folder:", os.getcwd())
-print("Files:", os.listdir("."))
-print("QR exists:", os.path.isdir("qr"))
-
-if os.path.isdir("qr"):
-    print("QR files:", os.listdir("qr"))
-
 
 # ==========================
-# BOT
+# MAIN
 # ==========================
 def main():
+
+    print("Current folder:", os.getcwd())
+    print("Files:", os.listdir("."))
+
+    print("QR1 exists:", os.path.isdir("qr1"))
+    print("QR2 exists:", os.path.isdir("qr2"))
+
+    if os.path.isdir("qr1"):
+        print("QR1 files:", len(os.listdir("qr1")))
+
+    if os.path.isdir("qr2"):
+        print("QR2 files:", len(os.listdir("qr2")))
 
     app = Application.builder().token(TOKEN).build()
 
