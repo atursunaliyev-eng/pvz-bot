@@ -38,7 +38,7 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # ==========================
     # QR papkalar
     # ==========================
-    qr_folders = ["qr1", "qr2"]
+    qr_folders = ["qr1", "qr2", "qr3"]
 
     for qr_folder in qr_folders:
 
