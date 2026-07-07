@@ -36,11 +36,29 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # ==========================
     # 1. QR KOD QIDIRISH
     # ==========================
-    qr_folder = "qr"
+    qr_folders = ["qr1", "qr2"]
 
-    if os.path.isdir(qr_folder):
+for qr_folder in qr_folders:
 
-        for file in os.listdir(qr_folder):
+    if not os.path.isdir(qr_folder):
+        continue
+
+    for file in os.listdir(qr_folder):
+
+        if file.lower().endswith(".png"):
+
+            file_name = os.path.splitext(file)[0]
+
+            if normalize(file_name) == search_text:
+
+                with open(os.path.join(qr_folder, file), "rb") as photo:
+
+                    await update.message.reply_photo(
+                        photo=photo,
+                        caption=f"🚚 Mashina: {file_name}"
+                    )
+
+                return
 
             if file.lower().endswith(".png"):
 
