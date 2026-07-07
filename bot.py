@@ -13,7 +13,7 @@ TOKEN = "8931236658:AAHz-ytkRblh95C3h6eR1X6U_g7rqtGoBPA"
 # ==========================
 # ADMIN ID
 # ==========================
-ADMIN_ID = 123456789   # o'zingizning Telegram ID
+ADMIN_ID = 570866674   # o'zingizning Telegram ID
 
 
 # ==========================
@@ -100,7 +100,7 @@ async def send_all(context, text):
 
 async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    if update.effective_user.id != ADMIN_ID = 570866674
+    if update.effective_user.id != ADMIN_ID:
         return
 
 
