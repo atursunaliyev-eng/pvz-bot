@@ -7,7 +7,7 @@ from telegram.ext import Application, MessageHandler, CommandHandler, ContextTyp
 # ==========================
 # BOT TOKEN
 # ==========================
-TOKEN = "YANGI_TOKENINGIZNI_BU_YERGA_QOYING"
+TOKEN = "8931236658:AAHz-ytkRblh95C3h6eR1X6U_g7rqtGoBPA"
 
 
 # ==========================
@@ -100,7 +100,7 @@ async def send_all(context, text):
 
 async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    if update.effective_user.id != ADMIN_ID:
+    if update.effective_user.id != ADMIN_ID:570866674
         return
 
 
