@@ -3,16 +3,16 @@ import pandas as pd
 from telegram import Update
 from telegram.ext import Application, MessageHandler, CommandHandler, ContextTypes, filters
 
-
 # ==========================
 # BOT TOKEN
 # ==========================
-TOKEN = "8931236658:AAHz-ytkRblh95C3h6eR1X6U_g7rqtGoBPA"
 
+TOKEN = os.getenv("BOT_TOKEN")
 
 # ==========================
 # ADMIN ID
 # ==========================
+
 ADMIN_ID = 570866674   # o'zingizning Telegram ID
 
 
