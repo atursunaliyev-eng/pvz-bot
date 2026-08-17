@@ -46,12 +46,65 @@ df.columns = ["address", "pvz_name", "latitude", "longitude"]
 # TEXT TOZALASH
 # ==========================
 def normalize(text):
-    return (
-        str(text)
-        .upper()
+    text = str(text).upper().strip()
+
+    replacements = {
+        "А": "A",
+        "Б": "B",
+        "В": "V",
+        "Г": "G",
+        "Д": "D",
+        "Е": "E",
+        "Ё": "E",
+        "Ж": "J",
+        "З": "Z",
+        "И": "I",
+        "Й": "Y",
+        "К": "K",
+        "Л": "L",
+        "М": "M",
+        "Н": "N",
+        "О": "O",
+        "П": "P",
+        "Р": "R",
+        "С": "S",
+        "Т": "T",
+        "У": "U",
+        "Ф": "F",
+        "Х": "X",
+        "Ц": "C",
+        "Ч": "CH",
+        "Ш": "SH",
+        "Щ": "SH",
+        "Ъ": "",
+        "Ы": "Y",
+        "Ь": "",
+        "Э": "E",
+        "Ю": "YU",
+        "Я": "YA"
+    }
+
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+
+    text = (
+        text
         .replace(" ", "")
         .replace("-", "")
+        .replace("_", "")
     )
+
+    return text
+
+
+def normalize_pvz(text):
+    text = normalize(text)
+
+    # FR prefiksini olib tashlaymiz
+    if text.startswith("FR"):
+        text = text[2:]
+
+    return text
 
 
 # ==========================
@@ -174,10 +227,12 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # PVZ SEARCH
     # ==========================
 
-    result = df[
+   search_pvz_text = normalize_pvz(user_text)
+
+result = df[
     df["pvz_name"]
-    .apply(normalize)
-    == search_text
+    .astype(str)
+    .apply(normalize_pvz) == search_pvz_text
 ]
 
 
