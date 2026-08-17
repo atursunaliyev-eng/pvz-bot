@@ -223,39 +223,33 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
-    # ==========================
+        # ==========================
     # PVZ SEARCH
     # ==========================
 
-   search_pvz_text = normalize_pvz(user_text)
+    search_pvz_text = normalize_pvz(user_text)
 
-result = df[
-    df["pvz_name"]
-    .astype(str)
-    .apply(normalize_pvz) == search_pvz_text
-]
-
+    result = df[
+        df["pvz_name"]
+        .astype(str)
+        .apply(normalize_pvz) == search_pvz_text
+    ]
 
     if not result.empty:
 
         row = result.iloc[0]
-
 
         await update.message.reply_text(
             f"PVZ: {row['pvz_name']}\n\n"
             f"Manzil:\n{row['address']}"
         )
 
-
         await update.message.reply_location(
             latitude=float(row["latitude"]),
             longitude=float(row["longitude"])
         )
 
-
         return
-
-
 
     await update.message.reply_text(
         "Ma'lumot topilmadi."
